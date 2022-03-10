@@ -14,6 +14,11 @@ const Home: NextPage = () => {
               <a> Ver categorias de ML Argentina </a>
             </Link>
           </li>
+          <li>
+            <Link href={`/game`} passHref>
+              <a> Game </a>
+            </Link>
+          </li>
       </ul>
     </>
   )

@@ -1,43 +1,58 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
-import { getItems } from '../../../../services'
+import { useRouter } from 'next/router'
+import ImageSlider from '../../../../components/ImageSlider'
+import { getItemsById } from '../../../../services'
 
 const Item: NextPage<any> = ({ itemId, item }) => {
-  console.log({ itemId, item })
-
+  const router = useRouter()
+  const goBack = () => { router.back() }
   return (
     <>
-      <h2>Item id#{itemId}</h2>
-      <h3>{item.title}</h3>
+      <button onClick={goBack}>VOLVER</button>
 
-      {item.pictures[0]?.secure_url && <Image src={item.pictures[0].secure_url} width={300} height={300} objectFit='contain' alt={item.title} />}
+      {
+        !!item.error
+          ? <><h2>Item {itemId} no encontrado</h2> <p>{item.error}</p> </>
+          : (
+            <>
+              <h2>Item id {itemId}</h2>
+              <h3>{item.title}</h3>
 
-      <p>Precio {item.currency_id} {item.price}</p>
-      <a href={item.permalink} target='_blank' rel="noreferrer" > <strong>Link publicacion</strong></a>
+              {
+                item.pictures
+                && <ImageSlider images={item.pictures.map((picture: any) => ({ src: picture.secure_url }))} altText={item.title} />
+              }
 
-      <h5>Otros metadatos</h5>
-      <ul style={{ display: 'flex', flexDirection: 'column' }}>
-        {
-          Object.keys(item).map((itemKey: any) => {
+              <p>Precio {item.currency_id} {item.price}</p>
+              <a href={item.permalink} target='_blank' rel="noreferrer" > <strong>Link publicacion</strong></a>
 
-            const value = item[itemKey]
+              <h5>Otros metadatos</h5>
+              <ul style={{ display: 'flex', flexDirection: 'column' }}>
+                {
+                  Object.keys(item).map((itemKey: any) => {
 
-            return ['string', 'number'].includes(typeof value)
-              ? <li key={itemKey}> {itemKey}: {value} </li>
-              : <li key={itemKey} style={{ color: 'red', order: 999 }}> {itemKey}: {typeof value} </li>
+                    const value = item[itemKey]
 
-          })
-        }
-      </ul>
+                    return ['string', 'number'].includes(typeof value)
+                      ? <li key={itemKey}> {itemKey}: {value} </li>
+                      : <li key={itemKey} style={{ color: 'red', order: 999 }}> {itemKey}: {typeof value} </li>
+
+                  })
+                }
+              </ul>
+            </>
+          )
+      }
     </>
   )
+
 }
 
 
 export async function getServerSideProps(context: any) {
   const { itemId } = context.query
-  const itemData = itemId ? await getItems(itemId) : null
-  const item = itemData[0]?.body
+  const itemData = itemId && await getItemsById(itemId) || null
+  const item = itemData[0]?.body || null
 
   return {
     props: {

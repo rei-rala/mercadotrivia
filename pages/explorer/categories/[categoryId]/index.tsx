@@ -1,15 +1,18 @@
 import { NextPage } from "next";
 import Link from "next/link";
-import { getItemsByCategory } from "../../../../services";
+import { useRouter } from "next/router";
+import { getItemsByIdByCategory } from "../../../../services";
 
 
-const Category: NextPage<{ categoryId: string, results: any }> = ({ categoryId,results  }) => {
-
-  console.log(results)
-
+const Category: NextPage<{ categoryId: string, results: any }> = ({ categoryId, results  }) => {
+  const router = useRouter()
+  const goBack = () => { router.back() }
+  
   return (
     <>
-      <h2>Categorias {categoryId}</h2>
+      <button onClick={goBack} >VOLVER</button>
+      <h2>Items de categoria {categoryId}</h2>
+      <p>Mostrando {results.length} items</p>
       <ul>
         {results.length && results.map((item:any) => (
           <li key={item.id}>
@@ -24,14 +27,13 @@ const Category: NextPage<{ categoryId: string, results: any }> = ({ categoryId,r
 }
 
 export async function getServerSideProps(context: any) {
-  const { categoryId } = context.query
-  console.log(categoryId)
-  const { results } =  (!!categoryId && await getItemsByCategory(categoryId)) ?? null
+  const { categoryId } = context.query ?? null
+  const { results, /* ...rest */ } =  (!!categoryId && await getItemsByIdByCategory(categoryId)) ?? null
 
   return {
     props: {
       categoryId,
-      results
+      results,
     }
   }
 }
