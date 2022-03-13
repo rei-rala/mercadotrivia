@@ -1,13 +1,21 @@
 import type { NextPage } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
-import ImageSlider from '../../../../components/ImageSlider'
-import { getItemsById } from '../../../../services'
+import ImageSlider from 'components/ImageSlider'
+import { EXCLUDED_CATEGORIES_ENTRIES, EXCLUDED_PROPERTIES_ENTRIES, INCLUDED_PROPERTIES_ENTRIES } from 'constants/gameConstraints'
+import { getItemsById } from 'services/explorer'
 
 const Item: NextPage<any> = ({ itemId, item }) => {
   const router = useRouter()
   const goBack = () => { router.back() }
+
+  console.log(item)
+
   return (
     <>
+      <Head>
+        <title>Item {itemId} - MercadoTrivia</title>
+      </Head>
       <button onClick={goBack}>VOLVER</button>
 
       {
@@ -15,8 +23,41 @@ const Item: NextPage<any> = ({ itemId, item }) => {
           ? <><h2>Item {itemId} no encontrado</h2> <p>{item.error}</p> </>
           : (
             <>
-              <h2>Item id {itemId}</h2>
-              <h3>{item.title}</h3>
+              <header>
+                <h2>Item id {itemId}</h2>
+                <h3>{item.title}</h3>
+              </header>
+
+              <fieldset>
+                <legend>Atributos de inclusion</legend>
+
+                <b>Propiedades incluidas</b>
+                <ul>
+                  {
+                    INCLUDED_PROPERTIES_ENTRIES.map(([prop, propValue]) => (
+                      <li key={`prop${prop}`}>{prop}: {propValue === item[prop] ? 'OK' : 'Excluido'}</li>
+                    ))
+                  }
+                </ul>
+
+                <b>Propiedades excluidas</b>
+                <ul>
+                  {
+                    EXCLUDED_PROPERTIES_ENTRIES.map(([prop, propValue]) => (
+                      <li key={`prop${prop}`}>{prop}: {propValue === item[prop] ? 'Excluido' : 'OK'}</li>
+                    ))
+                  }
+                </ul>
+
+                <b>Categorias excluidas</b>
+                <ul>
+                  {
+                    EXCLUDED_CATEGORIES_ENTRIES.map(([catId, catName]) => (
+                      <li key={`cat${catId}`}>{catName}: {item.category_id === catId ? 'Excluido' : 'OK'}</li>
+                    ))
+                  }
+                </ul>
+              </fieldset>
 
               {
                 item.pictures

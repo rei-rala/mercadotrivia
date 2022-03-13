@@ -1,8 +1,9 @@
 import type { NextPage } from 'next'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { EXCLUDED_CATEGORIES, EXCLUDED_CATEGORIES_ENTRIES } from '../../../constants'
-import { getCategories } from '../../../services'
+import { EXCLUDED_CATEGORIES_ENTRIES } from 'constants/gameConstraints'
+import { getCategories } from 'services/explorer'
 
 type MeliCategory = {
   id: string
@@ -24,11 +25,18 @@ export async function getServerSideProps() {
 const Categories: NextPage<{ categories: MeliCategory[] }> = ({ categories }) => {
   const router = useRouter()
   const goBack = () => { router.back() }
-  
+
   return (
     <>
+      <Head>
+        <title>Explorar categorias | MercadoTrivia</title>
+      </Head>
       <button onClick={goBack} >VOLVER</button>
-      <h2>Categorias <abbr title="MercadoLibre Argentina?">MLA</abbr></h2>
+      
+      <header>
+        <h2>Categorias <abbr title="MercadoLibre Argentina?">MLA</abbr></h2>
+      </header>
+
       <p>Total <b>{categories.length}</b> categorias, {EXCLUDED_CATEGORIES_ENTRIES.length} excluidas del juego por default </p>
 
       <h4> Excluyendo </h4>

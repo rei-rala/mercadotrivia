@@ -1,9 +1,10 @@
 import type { NextPage } from 'next'
+import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { searchItems } from '../../../services'
+import { searchItems } from 'services/explorer'
 
 const Items: NextPage<any> = () => {
   const router = useRouter()
@@ -21,13 +22,19 @@ const Items: NextPage<any> = () => {
       setResults(results)
     }
   }
-  
+
 
 
   return (
     <>
+      <Head>
+        <title> Explorar items | MercadoTrivia</title>
+      </Head>
       <button onClick={goBack}>VOLVER</button>
-      <h2>Busqueda items</h2>
+
+      <header>
+        <h2>Busqueda items</h2>
+      </header>
 
       <form onSubmit={handleSearch} >
         <input type="text" placeholder="Buscar..." value={query} onChange={handleChange} />
@@ -40,18 +47,21 @@ const Items: NextPage<any> = () => {
         {
           results.length ? results.map((item: any) => (
             <li key={item.id}>
-              <Link href={`/explorer/items/${item.id}`} passHref>
-                <a>
-                  {item.id}: {item.title} <br />
-                  <Image src={item.thumbnail} width={100} height={100} alt={item.title} />
-                </a>
-
-              </Link>
+              <Link href={`/explorer/items/${item.id}`} passHref><a>
+                {item.id}
+              </a></Link>
+              : {item.title} <br />
+              <Image src={item.thumbnail} width={100} height={100} alt={item.title} />
             </li>
           ))
             : <p>No hay items</p>
         }
       </ul>
+      <style jsx>{`
+            li {
+              border-bottom: 1px solid red;
+            }
+          `}</style>
     </>
   )
 }
