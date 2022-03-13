@@ -26,7 +26,13 @@ const Home: NextPage = () => {
           </Link>
         </li>
         <li>
-          <Link href={`/#`} passHref >
+          <Link href={`/explorer/game`} passHref>
+            <a> Game MLA products </a>
+          </Link>
+        </li>
+
+        <li>
+          <Link href={`/game`} passHref >
             <a> Game [WIP] </a>
           </Link>
         </li>

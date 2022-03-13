@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { EXCLUDED_CATEGORIES_ENTRIES } from 'constants/gameConstraints'
-import { getCategories } from 'services/explorer'
+import { getCategories } from 'services'
 
 type MeliCategory = {
   id: string
@@ -32,7 +32,7 @@ const Categories: NextPage<{ categories: MeliCategory[] }> = ({ categories }) =>
         <title>Explorar categorias | MercadoTrivia</title>
       </Head>
       <button onClick={goBack} >VOLVER</button>
-      
+
       <header>
         <h2>Categorias <abbr title="MercadoLibre Argentina?">MLA</abbr></h2>
       </header>

@@ -1,15 +1,13 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import ImageSlider from 'components/ImageSlider'
+import ImageSlider from 'components/ImageSlider/ImageSlider'
 import { EXCLUDED_CATEGORIES_ENTRIES, EXCLUDED_PROPERTIES_ENTRIES, INCLUDED_PROPERTIES_ENTRIES } from 'constants/gameConstraints'
 import { getItemsById } from 'services/explorer'
 
 const Item: NextPage<any> = ({ itemId, item }) => {
   const router = useRouter()
   const goBack = () => { router.back() }
-
-  console.log(item)
 
   return (
     <>

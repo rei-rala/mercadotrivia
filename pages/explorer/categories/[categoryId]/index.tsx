@@ -3,7 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getItemsByIdByCategory } from "services/explorer";
+import { getItemsByCategoryId } from "services/explorer";
 
 
 const Category: NextPage<{ categoryId: string, results: any }> = ({ categoryId, results }) => {
@@ -48,7 +48,7 @@ const Category: NextPage<{ categoryId: string, results: any }> = ({ categoryId, 
 
 export async function getServerSideProps(context: any) {
   const { categoryId } = context.query ?? null
-  const { results, /* ...rest */ } = (!!categoryId && await getItemsByIdByCategory(categoryId)) ?? null
+  const { results, /* ...rest */ } = (!!categoryId && await getItemsByCategoryId(categoryId)) ?? null
 
   return {
     props: {

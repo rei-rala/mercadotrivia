@@ -1,0 +1,58 @@
+.container {
+  position: relative;
+
+  display: grid;
+  place-items: center;
+  width: 500px;
+  
+  margin: 0;
+  border: 1px solid black;
+
+  overflow: hidden;
+  cursor: default;
+
+  border-radius: 0.75rem;
+}
+
+.indicator {
+  border-radius: 0.75rem;
+}
+
+.switcher, .indicator {
+  position: absolute;
+  color: white;
+  border: none;
+  background: hsla(0, 0%, 0%, 1);
+  transition: opacity 200ms;
+  opacity: 0.25;
+  z-index: 2;
+  width: 4rem;
+}
+
+.switcher {
+  position: absolute;
+  top: 50%;
+  height: 100%;
+  transform: translateY(-50%);
+
+  background: linear-gradient(0deg, hsla(0,0%,0%,0.25) 0%, hsla(0,0%,0%,1) 20%, hsla(0,0%,0%,1) 80% , hsla(0,0%,0%,0.25) 100%);
+  cursor: pointer;
+}
+
+.switcher:first-child {
+  left: 0;
+}
+.switcher:last-child {
+  right: 0;
+}
+
+.indicator {
+  bottom: 2.5%;
+  padding: 0.5rem 0;
+  text-align: center;
+  border: 1px solid white;
+}
+
+:is(.switcher, .indicator):hover {
+  opacity: 1;
+}

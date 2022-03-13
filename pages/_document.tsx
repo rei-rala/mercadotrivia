@@ -26,6 +26,10 @@ export default function Document() {
           sizes="32x32"
         />
         <link rel="apple-touch-icon" href="/icons/apple-icon.png" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true' />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet" />
       </Head>
       <body>
         <Main />
