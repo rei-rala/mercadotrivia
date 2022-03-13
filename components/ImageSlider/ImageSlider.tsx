@@ -3,7 +3,7 @@ import React, { useMemo, useState } from "react"
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-import styles from './ImageSlider.module.scss'
+import styles from './imageSlider.module.scss'
 
 type ArrayOfImages = { src: string, alt?: string }[]
 
