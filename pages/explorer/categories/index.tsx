@@ -5,6 +5,9 @@ import { useRouter } from 'next/router'
 import { EXCLUDED_CATEGORIES_ENTRIES } from 'constants/gameConstraints'
 import { getCategories } from 'services'
 
+import FloatingButton from "components/FloatingButton/FloatingButton";
+
+
 type MeliCategory = {
   id: string
   name: string
@@ -27,11 +30,11 @@ const Categories: NextPage<{ categories: MeliCategory[] }> = ({ categories }) =>
   const goBack = () => { router.back() }
 
   return (
-    <>
+    <section>
       <Head>
         <title>Explorar categorias | MercadoTrivia</title>
       </Head>
-      <button onClick={goBack} >VOLVER</button>
+      <FloatingButton click={goBack}>VOLVER</FloatingButton>
 
       <header>
         <h2>Categorias <abbr title="MercadoLibre Argentina?">MLA</abbr></h2>
@@ -56,7 +59,7 @@ const Categories: NextPage<{ categories: MeliCategory[] }> = ({ categories }) =>
             </li>
           ))}
       </ol>
-    </>
+    </section>
   )
 }
 

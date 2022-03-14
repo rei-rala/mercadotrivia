@@ -2,6 +2,12 @@
   --mainColor: #fff159;
   --bkgColor: #ebebeb;
   --fontColor: #333;
+  --slider-duration-ms: 500ms;
+  --header-height: 60px;
+}
+
+:root body.noAnimations {
+  --slider-duration-ms: 0ms;
 }
 
 * {
@@ -27,6 +33,7 @@ body {
 body {
   background-color: var(--bkgColor);
   color: var(--fontColor);
+  overflow: hidden scroll;
 }
 
 a {
@@ -45,10 +52,41 @@ abbr {
   cursor: help;
 }
 
-button {
+summary, button, a {
   cursor: pointer;
 }
 
 header {
   background: var(--mainColor);
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+section {
+  padding-top: calc(var(--header-height) + 20px);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+ol li::marker {
+  font-family: 'Courier New', Courier, monospace;
 }

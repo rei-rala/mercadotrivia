@@ -4,6 +4,9 @@ export const EXCLUDED_CATEGORIES: { [codigoCategoria: string]: string } = {
   MLA1540: 'Servicios',
   MLA2547: 'Entradas para Eventos',
   MLA1168: 'Música, Películas y Series',
+  MLA1367: 'Antigüedades y Colecciones',
+  MLA1368: 'Arte, Librería y Mercería',
+  MLA3025: 'Libros, Revistas y Comics'
 }
 
 export const EXCLUDED_CATEGORIES_ENTRIES = Object.entries(EXCLUDED_CATEGORIES)

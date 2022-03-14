@@ -5,11 +5,11 @@ import Link from 'next/link'
 const Home: NextPage = () => {
 
   return (
-    <>
+    <section>
       <Head>
         <title>Home | MercadoTrivia</title>
       </Head>
-
+      
       <header>
         <h2>Bienvenido!</h2>
       </header>
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
           </Link>
         </li>
       </ul>
-    </>
+    </section>
   )
 }
 

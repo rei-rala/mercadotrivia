@@ -5,16 +5,18 @@ import ImageSlider from 'components/ImageSlider/ImageSlider'
 import { EXCLUDED_CATEGORIES_ENTRIES, EXCLUDED_PROPERTIES_ENTRIES, INCLUDED_PROPERTIES_ENTRIES } from 'constants/gameConstraints'
 import { getItemsById } from 'services/explorer'
 
+import FloatingButton from 'components/FloatingButton/FloatingButton'
+
 const Item: NextPage<any> = ({ itemId, item }) => {
   const router = useRouter()
   const goBack = () => { router.back() }
 
   return (
-    <>
+    <section>
       <Head>
         <title>Item {itemId} - MercadoTrivia</title>
       </Head>
-      <button onClick={goBack}>VOLVER</button>
+      <FloatingButton click={goBack}>VOLVER</FloatingButton>
 
       {
         !!item.error
@@ -29,32 +31,41 @@ const Item: NextPage<any> = ({ itemId, item }) => {
               <fieldset>
                 <legend>Atributos de inclusion</legend>
 
-                <b>Propiedades incluidas</b>
-                <ul>
-                  {
-                    INCLUDED_PROPERTIES_ENTRIES.map(([prop, propValue]) => (
-                      <li key={`prop${prop}`}>{prop}: {propValue === item[prop] ? 'OK' : 'Excluido'}</li>
-                    ))
-                  }
-                </ul>
+                <details>
 
-                <b>Propiedades excluidas</b>
-                <ul>
-                  {
-                    EXCLUDED_PROPERTIES_ENTRIES.map(([prop, propValue]) => (
-                      <li key={`prop${prop}`}>{prop}: {propValue === item[prop] ? 'Excluido' : 'OK'}</li>
-                    ))
-                  }
-                </ul>
+                  <summary>Propiedades incluidas</summary>
+                  <ul>
+                    {
+                      INCLUDED_PROPERTIES_ENTRIES.map(([prop, propValue]) => (
+                        <li key={`prop${prop}`}>{prop}: {propValue === item[prop] ? 'OK' : 'Excluido'}</li>
+                      ))
+                    }
+                  </ul>
+                </details>
 
-                <b>Categorias excluidas</b>
-                <ul>
-                  {
-                    EXCLUDED_CATEGORIES_ENTRIES.map(([catId, catName]) => (
-                      <li key={`cat${catId}`}>{catName}: {item.category_id === catId ? 'Excluido' : 'OK'}</li>
-                    ))
-                  }
-                </ul>
+                <details>
+
+                  <summary>Propiedades excluidas</summary>
+                  <ul>
+                    {
+                      EXCLUDED_PROPERTIES_ENTRIES.map(([prop, propValue]) => (
+                        <li key={`prop${prop}`}>{prop}: {propValue === item[prop] ? 'Excluido' : 'OK'}</li>
+                      ))
+                    }
+                  </ul>
+                </details>
+
+                <details>
+                  <summary>Categorias excluidas</summary>
+                  <ul>
+                    {
+                      EXCLUDED_CATEGORIES_ENTRIES.map(([catId, catName]) => (
+                        <li key={`cat${catId}`}>{catName}: {item.category_id === catId ? 'Excluido' : 'OK'}</li>
+                      ))
+                    }
+                  </ul>
+                </details>
+
               </fieldset>
 
               {
@@ -74,15 +85,26 @@ const Item: NextPage<any> = ({ itemId, item }) => {
 
                     return ['string', 'number'].includes(typeof value)
                       ? <li key={itemKey}> {itemKey}: {value} </li>
-                      : <li key={itemKey} style={{ color: 'red', order: 999 }}> {itemKey}: {typeof value} </li>
+                      : <li key={itemKey} style={{ order: 999 }}>
+                        <ol >
+                          {itemKey}: <br />
 
+                          {
+                            !!value
+                              ? Object.values(value).map((v: any, index: number) => (
+                                <li key={'prop' + itemKey + index} style={{ color: 'red', wordBreak: 'break-all' }}> {JSON.stringify(v)}</li>
+                              ))
+                              : <span  style={{ color: 'red' }}>No hay valor</span>
+                          }
+                        </ol>
+                      </li>
                   })
                 }
               </ul>
             </>
           )
       }
-    </>
+    </section>
   )
 
 }

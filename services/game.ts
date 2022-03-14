@@ -20,3 +20,11 @@ export const getGameItems: (aditionalCatIdFilter?: string[]) => Promise<any[]> =
   const itemsFiltered = items.flat().filter(item => EXCLUDED_PROPERTIES_KEYS.map(propKey => item[propKey] === propKey))
   return itemsFiltered
 }
+
+export const filterUniqueItems: (items: any[]) => any[] = (items) => {
+  const itemsFiltered = items.filter((item, index, self) => self.findIndex(i => i.id === item.id) === index)
+  
+  return itemsFiltered
+}
+
+export const getGameItemIds = async (aditionalCatIdFilter?: string[]) => await getGameItems(aditionalCatIdFilter).then(items => items.map(item => item.id))
